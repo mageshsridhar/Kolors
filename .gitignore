@@ -1,0 +1,7 @@
+.DS_Store
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.xcresult
+# Pods/ is committed on purpose so the app builds without CocoaPods.

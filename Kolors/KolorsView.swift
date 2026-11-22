@@ -6,52 +6,150 @@
 //
 
 import SwiftUI
+import CoreData
 
+/// The Library tab.
 struct KolorsView: View {
-    @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Kolors.paletteName, ascending: true)]) private var kolors : FetchedResults<Kolors>
+    var onCreate: () -> Void = {}
+
+    @FetchRequest(sortDescriptors: Kolors.librarySort, animation: .default)
+    private var kolors: FetchedResults<Kolors>
     @Environment(\.managedObjectContext) private var viewContext
-    private func saveContext(){
-        do{
-            try viewContext.save()
-        } catch{
-            let error = error as NSError
-            fatalError("Unresolved Error: \(error)")
-        }
-    }
-    private func deleteKolor(offsets: IndexSet){
-        withAnimation(){
-            offsets.map{ kolors[$0] }.forEach(viewContext.delete)
-            saveContext()
-        }
-        
-    }
+    @State private var showDeleteError = false
+
     var body: some View {
-        NavigationView{
-            List{
-                ForEach(kolors){kolor in
-                    NavigationLink(destination: KolorView(kolor: kolor)){
-                        HStack{
-                            Image(uiImage: UIImage(data: kolor.image!)!).resizable().aspectRatio(contentMode: .fill).clipShape(Circle()).frame(width: 40,height: 40)
-                            VStack(alignment: .leading,spacing: 5){
-                                Text(kolor.paletteName!)
-                                HStack(spacing: 5){
-                                    Circle().fill(Color(red: kolor.color1R/255, green: kolor.color1G/255, blue: kolor.color1B/255)).frame(width: 15,height: 15)
-                                    Circle().fill(Color(red: kolor.color2R/255, green: kolor.color2G/255, blue: kolor.color2B/255)).frame(width: 15,height: 15)
-                                    Circle().fill(Color(red: kolor.color3R/255, green: kolor.color3G/255, blue: kolor.color3B/255)).frame(width: 15,height: 15)
-                                    Circle().fill(Color(red: kolor.color4R/255, green: kolor.color4G/255, blue: kolor.color4B/255)).frame(width: 15,height: 15)
-                                    Circle().fill(Color(red: kolor.color5R/255, green: kolor.color5G/255, blue: kolor.color5B/255)).frame(width: 15,height: 15)
-                                }
-                            }
-                        }.padding()
+        NavigationView {
+            Group {
+                if kolors.isEmpty {
+                    EmptyLibrary(onCreate: onCreate)
+                } else {
+                    list
+                }
+            }
+            .background(Theme.background.ignoresSafeArea())
+            .navigationTitle("Library")
+            .alert("Couldn't Delete Palette", isPresented: $showDeleteError) {
+                Button("Close", role: .cancel) {}
+            } message: {
+                Text("Your library hasn't changed. Please try again.")
+            }
+        }
+        .navigationViewStyle(.stack)
+    }
+
+    private var list: some View {
+        List {
+            ForEach(kolors) { kolor in
+                PaletteCard(kolor: kolor)
+                    // Keeps the card tappable without the list's disclosure arrow.
+                    .background(
+                        NavigationLink(destination: KolorView(kolor: kolor)) { EmptyView() }
+                            .opacity(0)
+                            .accessibilityHidden(true)
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Theme.background)
+                    .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+            }
+            .onDelete(perform: delete)
+        }
+        .listStyle(.plain)
+        .clearListBackground()
+    }
+
+    private func delete(offsets: IndexSet) {
+        offsets.map { kolors[$0] }.forEach(viewContext.delete)
+        do {
+            try viewContext.saveOrRollback()
+        } catch {
+            showDeleteError = true
+        }
+    }
+}
+
+private struct PaletteCard: View {
+    @ObservedObject var kolor: Kolors
+
+    var body: some View {
+        let colors = kolor.paletteColors
+        VStack(spacing: 0) {
+            PaletteStrip(colors: colors).frame(height: 64)
+            HStack(spacing: 12) {
+                Group {
+                    if let thumbnail = kolor.thumbnail.flatMap(UIImage.init(data:)) {
+                        Image(uiImage: thumbnail).resizable().aspectRatio(contentMode: .fill)
+                    } else {
+                        Image(systemName: "photo").foregroundColor(Theme.secondaryText)
                     }
-                }.onDelete(perform: deleteKolor)
-            }.navigationBarTitle(Text("My Kolors"))
+                }
+                .frame(width: 40, height: 40)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(kolor.displayName).font(.headline)
+                    Text(colors.countLabel).font(.subheadline).foregroundColor(Theme.secondaryText)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 11)
+        }
+        .background(Theme.card)
+        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .accessibilityElement()
+        .accessibilityLabel("\(kolor.displayName), \(colors.countLabel)")
+        .accessibilityAddTraits(.isButton)
+    }
+}
+
+private struct EmptyLibrary: View {
+    let onCreate: () -> Void
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 8) {
+                HStack(spacing: 0) {
+                    Theme.fill
+                    Theme.card
+                    Theme.fill
+                }
+                .frame(width: 150, height: 64)
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .padding(.bottom, 16)
+                .accessibilityHidden(true)
+                Text("No palettes yet").font(.title2.bold())
+                Text("Palettes you save will appear here.").foregroundColor(Theme.secondaryText)
+                Button("Create a Palette", action: onCreate)
+                    .buttonStyle(CapsuleButtonStyle())
+                    .padding(.top, 14)
+            }
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 28)
+            .padding(.top, 96)
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder func clearListBackground() -> some View {
+        if #available(iOS 16, *) {
+            scrollContentBackground(.hidden)
+        } else {
+            self
         }
     }
 }
 
 struct KolorsView_Previews: PreviewProvider {
+    static let persistence: PersistenceController = {
+        let controller = PersistenceController(inMemory: true)
+        Kolors.insert(
+            name: "Sunset", palette: SampleArtwork.palette, imageData: nil, thumbnailData: nil,
+            into: controller.container.viewContext
+        )
+        return controller
+    }()
+
     static var previews: some View {
-        KolorsView()
+        KolorsView().environment(\.managedObjectContext, persistence.container.viewContext)
     }
 }

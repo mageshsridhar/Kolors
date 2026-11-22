@@ -10,10 +10,12 @@ import CoreData
 
 @main
 struct KolorsApp: App {
-    let persistentContainer = PersistenceController.shared
+    private let persistence = PersistenceController.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView().environment(\.managedObjectContext, persistentContainer.container.viewContext)
+            ContentView(libraryFailedToLoad: persistence.loadError != nil)
+                .environment(\.managedObjectContext, persistence.container.viewContext)
         }
     }
 }

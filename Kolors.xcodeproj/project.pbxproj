@@ -19,7 +19,31 @@
 		50FF2819261297E500F4875E /* KolorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF2818261297E500F4875E /* KolorsView.swift */; };
 		50FF281D2612990C00F4875E /* MyKolors.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50FF281B2612990C00F4875E /* MyKolors.xcdatamodeld */; };
 		FA0B98647C456F5FD8FB3039 /* Pods_Kolors.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 467CC384F22124CBD78E913B /* Pods_Kolors.framework */; };
+		A1C010500000000000000001 /* RGBColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000002 /* RGBColor.swift */; };
+		A1C010500000000000000003 /* ImageProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000004 /* ImageProcessing.swift */; };
+		A1C010500000000000000005 /* PaletteExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000006 /* PaletteExtractor.swift */; };
+		A1C010500000000000000007 /* KolorsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000008 /* KolorsModel.swift */; };
+		A1C010500000000000000009 /* StoreMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C01050000000000000000A /* StoreMigrator.swift */; };
+		A1C01050000000000000000B /* ColorBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C01050000000000000000C /* ColorBars.swift */; };
+		A1C01050000000000000000D /* PaletteExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C01050000000000000000E /* PaletteExtractorTests.swift */; };
+		A1C01050000000000000000F /* PersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000010 /* PersistenceTests.swift */; };
+		A1C010500000000000000100 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000101 /* Theme.swift */; };
+		A1C010500000000000000102 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000103 /* PhotoPicker.swift */; };
+		A1C010500000000000000104 /* PaletteContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000105 /* PaletteContent.swift */; };
+		A1C010500000000000000106 /* PaletteNameSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000107 /* PaletteNameSheet.swift */; };
+		A1C010500000000000000108 /* PaletteSharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C010500000000000000109 /* PaletteSharing.swift */; };
+		A1C01050000000000000010A /* SampleArtwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C01050000000000000010B /* SampleArtwork.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A1C010500000000000000017 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 503C54842612662300309652 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 503C548B2612662300309652;
+			remoteInfo = Kolors;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		15F95460C26B645D04EE575D /* Pods-Kolors.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kolors.debug.xcconfig"; path = "Target Support Files/Pods-Kolors/Pods-Kolors.debug.xcconfig"; sourceTree = "<group>"; };
@@ -38,6 +62,22 @@
 		50FF28152612975D00F4875E /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		50FF2818261297E500F4875E /* KolorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KolorsView.swift; sourceTree = "<group>"; };
 		50FF281C2612990C00F4875E /* MyKolors.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyKolors.xcdatamodel; sourceTree = "<group>"; };
+		A1C010500000000000000002 /* RGBColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBColor.swift; sourceTree = "<group>"; };
+		A1C010500000000000000004 /* ImageProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessing.swift; sourceTree = "<group>"; };
+		A1C010500000000000000006 /* PaletteExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteExtractor.swift; sourceTree = "<group>"; };
+		A1C010500000000000000008 /* KolorsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KolorsModel.swift; sourceTree = "<group>"; };
+		A1C01050000000000000000A /* StoreMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMigrator.swift; sourceTree = "<group>"; };
+		A1C01050000000000000000C /* ColorBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorBars.swift; sourceTree = "<group>"; };
+		A1C01050000000000000000E /* PaletteExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteExtractorTests.swift; sourceTree = "<group>"; };
+		A1C010500000000000000010 /* PersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceTests.swift; sourceTree = "<group>"; };
+		A1C010500000000000000011 /* KolorsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KolorsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1C01050000000000000001B /* MyKolors 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "MyKolors 2.xcdatamodel"; sourceTree = "<group>"; };
+		A1C010500000000000000101 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A1C010500000000000000103 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		A1C010500000000000000105 /* PaletteContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteContent.swift; sourceTree = "<group>"; };
+		A1C010500000000000000107 /* PaletteNameSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteNameSheet.swift; sourceTree = "<group>"; };
+		A1C010500000000000000109 /* PaletteSharing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteSharing.swift; sourceTree = "<group>"; };
+		A1C01050000000000000010B /* SampleArtwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleArtwork.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +86,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA0B98647C456F5FD8FB3039 /* Pods_Kolors.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1C010500000000000000015 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				503C548E2612662300309652 /* Kolors */,
+				A1C010500000000000000012 /* KolorsTests */,
 				503C548D2612662300309652 /* Products */,
 				167EBFD7358AB27C717BFE28 /* Pods */,
 				519F6F481E00913544AE7A66 /* Frameworks */,
@@ -75,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				503C548C2612662300309652 /* Kolors.app */,
+				A1C010500000000000000011 /* KolorsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +143,18 @@
 				50632F8C2614269D00C5972B /* Persistence.swift */,
 				50FF2818261297E500F4875E /* KolorsView.swift */,
 				50632F8F2614337400C5972B /* KolorView.swift */,
+				A1C01050000000000000010B /* SampleArtwork.swift */,
+				A1C010500000000000000109 /* PaletteSharing.swift */,
+				A1C010500000000000000107 /* PaletteNameSheet.swift */,
+				A1C010500000000000000105 /* PaletteContent.swift */,
+				A1C010500000000000000103 /* PhotoPicker.swift */,
+				A1C010500000000000000101 /* Theme.swift */,
+				A1C010500000000000000002 /* RGBColor.swift */,
+				A1C010500000000000000004 /* ImageProcessing.swift */,
+				A1C010500000000000000006 /* PaletteExtractor.swift */,
+				A1C010500000000000000008 /* KolorsModel.swift */,
+				A1C01050000000000000000A /* StoreMigrator.swift */,
+				A1C01050000000000000000C /* ColorBars.swift */,
 			);
 			path = Kolors;
 			sourceTree = "<group>";
@@ -112,6 +173,15 @@
 				467CC384F22124CBD78E913B /* Pods_Kolors.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1C010500000000000000012 /* KolorsTests */ = {
+			isa = PBXGroup;
+			children = (
+				A1C01050000000000000000E /* PaletteExtractorTests.swift */,
+				A1C010500000000000000010 /* PersistenceTests.swift */,
+			);
+			path = KolorsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,6 +206,23 @@
 			productReference = 503C548C2612662300309652 /* Kolors.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A1C010500000000000000013 /* KolorsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1C010500000000000000018 /* Build configuration list for PBXNativeTarget "KolorsTests" */;
+			buildPhases = (
+				A1C010500000000000000014 /* Sources */,
+				A1C010500000000000000015 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1C010500000000000000016 /* PBXTargetDependency */,
+			);
+			name = KolorsTests;
+			productName = KolorsTests;
+			productReference = A1C010500000000000000011 /* KolorsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -147,6 +234,9 @@
 				TargetAttributes = {
 					503C548B2612662300309652 = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					A1C010500000000000000013 = {
+						TestTargetID = 503C548B2612662300309652;
 					};
 				};
 			};
@@ -164,6 +254,7 @@
 			projectRoot = "";
 			targets = (
 				503C548B2612662300309652 /* Kolors */,
+				A1C010500000000000000013 /* KolorsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -236,10 +327,39 @@
 				503C54922612662300309652 /* ContentView.swift in Sources */,
 				50FF281226126AED00F4875E /* ImagePickerView.swift in Sources */,
 				503C54902612662300309652 /* KolorsApp.swift in Sources */,
+				A1C01050000000000000010A /* SampleArtwork.swift in Sources */,
+				A1C010500000000000000108 /* PaletteSharing.swift in Sources */,
+				A1C010500000000000000106 /* PaletteNameSheet.swift in Sources */,
+				A1C010500000000000000104 /* PaletteContent.swift in Sources */,
+				A1C010500000000000000102 /* PhotoPicker.swift in Sources */,
+				A1C010500000000000000100 /* Theme.swift in Sources */,
+				A1C010500000000000000001 /* RGBColor.swift in Sources */,
+				A1C010500000000000000003 /* ImageProcessing.swift in Sources */,
+				A1C010500000000000000005 /* PaletteExtractor.swift in Sources */,
+				A1C010500000000000000007 /* KolorsModel.swift in Sources */,
+				A1C010500000000000000009 /* StoreMigrator.swift in Sources */,
+				A1C01050000000000000000B /* ColorBars.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1C010500000000000000014 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1C01050000000000000000D /* PaletteExtractorTests.swift in Sources */,
+				A1C01050000000000000000F /* PersistenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1C010500000000000000016 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 503C548B2612662300309652 /* Kolors */;
+			targetProxy = A1C010500000000000000017 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		503C54992612662500309652 /* Debug */ = {
@@ -293,7 +413,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -348,7 +468,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -369,7 +489,7 @@
 				DEVELOPMENT_TEAM = SLSQWYAHLF;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Kolors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,7 +497,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = MageshSridhar.Kolors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -392,7 +512,7 @@
 				DEVELOPMENT_TEAM = SLSQWYAHLF;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Kolors/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -400,7 +520,57 @@
 				PRODUCT_BUNDLE_IDENTIFIER = MageshSridhar.Kolors;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		A1C010500000000000000019 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SLSQWYAHLF;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ColorThiefSwift",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = MageshSridhar.KolorsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kolors.app/Kolors";
+			};
+			name = Debug;
+		};
+		A1C01050000000000000001A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = SLSQWYAHLF;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/ColorThiefSwift",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = MageshSridhar.KolorsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kolors.app/Kolors";
 			};
 			name = Release;
 		};
@@ -425,15 +595,25 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		A1C010500000000000000018 /* Build configuration list for PBXNativeTarget "KolorsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1C010500000000000000019 /* Debug */,
+				A1C01050000000000000001A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
 		50FF281B2612990C00F4875E /* MyKolors.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A1C01050000000000000001B /* MyKolors 2.xcdatamodel */,
 				50FF281C2612990C00F4875E /* MyKolors.xcdatamodel */,
 			);
-			currentVersion = 50FF281C2612990C00F4875E /* MyKolors.xcdatamodel */;
+			currentVersion = A1C01050000000000000001B /* MyKolors 2.xcdatamodel */;
 			path = MyKolors.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

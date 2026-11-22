@@ -6,20 +6,32 @@
 //
 
 import SwiftUI
-import ColorThiefSwift
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    var body: some View{
-        TabView{
-            ImageView().environment(\.managedObjectContext, viewContext).tabItem { Label(
-                title: { Text("Image") },
-                icon: { Image(systemName: "photo") }
-            ) }
-            KolorsView().environment(\.managedObjectContext, viewContext).tabItem { Label(
-                title: { Text("Library") },
-                icon: { Image(systemName: "paintpalette") }
-            ) }
+    private enum Tab {
+        case create, library
+    }
+
+    @State private var tab = Tab.create
+    @State private var showLoadError: Bool
+
+    init(libraryFailedToLoad: Bool = false) {
+        _showLoadError = State(initialValue: libraryFailedToLoad)
+    }
+
+    var body: some View {
+        TabView(selection: $tab) {
+            ImageView()
+                .tabItem { Label("Create", systemImage: "plus.circle") }
+                .tag(Tab.create)
+            KolorsView { tab = .create }
+                .tabItem { Label("Library", systemImage: "paintpalette") }
+                .tag(Tab.library)
+        }
+        .alert("Library Unavailable", isPresented: $showLoadError) {
+            Button("Close", role: .cancel) {}
+        } message: {
+            Text("Your saved palettes couldn't be opened, and new ones can't be saved right now. Try restarting the app.")
         }
     }
 }
@@ -27,5 +39,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.managedObjectContext, PersistenceController(inMemory: true).container.viewContext)
     }
 }

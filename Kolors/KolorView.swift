@@ -6,147 +6,98 @@
 //
 
 import SwiftUI
-import MobileCoreServices
+import CoreData
+
+/// A saved palette.
 struct KolorView: View {
+    /// What's on screen, kept so that nothing disappears while a deleted palette's screen closes.
+    private struct Snapshot {
+        var name: String
+        let image: UIImage?
+        let colors: [RGBColor]
+    }
+
+    let kolor: Kolors
+
     @Environment(\.managedObjectContext) private var viewContext
-    let kolor : FetchedResults<Kolors>.Element
-    var color1 : some View{
-        HStack{
-            Circle().fill(Color(red: kolor.color1R/255, green: kolor.color1G/255, blue: kolor.color1B/255)).frame(width: UIScreen.main.bounds.width/5,height:UIScreen.main.bounds.width/5).padding(.horizontal)
-            VStack(alignment:.leading,spacing: 6){
-                Text(kolor.color1Hex!).font(.title3).bold()
-                    .onTapGesture(count: 1) {
-                        UIPasteboard.general.setValue(kolor.color1Hex!,
-                                forPasteboardType: kUTTypePlainText as String)
-                        }
-                HStack{
-                    Circle().fill(Color.red).frame(width: 10, height: 10)
-                    Text("R: \(Int(kolor.color1R))").font(.caption)
-                    Circle().fill(Color.green).frame(width: 10, height: 10)
-                    Text("G: \(Int(kolor.color1G))").font(.caption)
-                    Circle().fill(Color.blue).frame(width: 10, height: 10)
-                    Text("B: \(Int(kolor.color1B))").font(.caption)
-                }
-            }
-            Spacer()
-        }.padding()
-        .background(RoundedRectangle(cornerRadius: 15, style: .continuous).fill(Color("Card")).frame(width:UIScreen.main.bounds.width-30))
-    }
-    var color2 : some View{
-        HStack{
-            Circle().fill(Color(red: kolor.color2R/255, green: kolor.color2G/255, blue: kolor.color2B/255)).frame(width: UIScreen.main.bounds.width/5,height:UIScreen.main.bounds.width/5).padding(.horizontal)
-            VStack(alignment:.leading,spacing: 6){
-                Text(kolor.color2Hex!).font(.title3).bold()
-                    .onTapGesture(count: 1) {
-                        UIPasteboard.general.setValue(kolor.color2Hex!,
-                                forPasteboardType: kUTTypePlainText as String)
-                        }
-                HStack{
-                    Circle().fill(Color.red).frame(width: 10, height: 10)
-                    Text("R: \(Int(kolor.color2R))").font(.caption)
-                    Circle().fill(Color.green).frame(width: 10, height: 10)
-                    Text("G: \(Int(kolor.color2G))").font(.caption)
-                    Circle().fill(Color.blue).frame(width: 10, height: 10)
-                    Text("B: \(Int(kolor.color2B))").font(.caption)
-                }
-            }
-            Spacer()
-        }.padding()
-        .background(RoundedRectangle(cornerRadius: 15, style: .continuous).fill(Color("Card")).frame(width:UIScreen.main.bounds.width-30))
-    }
-    var color3 : some View{
-        HStack{
-            Circle().fill(Color(red: kolor.color3R/255, green: kolor.color3G/255, blue: kolor.color3B/255)).frame(width: UIScreen.main.bounds.width/5,height:UIScreen.main.bounds.width/5).padding(.horizontal)
-            VStack(alignment:.leading,spacing: 6){
-                Text(kolor.color3Hex!).font(.title3).bold()
-                    .onTapGesture(count: 1) {
-                        UIPasteboard.general.setValue(kolor.color3Hex!,
-                                forPasteboardType: kUTTypePlainText as String)
-                        }
-                HStack{
-                    Circle().fill(Color.red).frame(width: 10, height: 10)
-                    Text("R: \(Int(kolor.color3R))").font(.caption)
-                    Circle().fill(Color.green).frame(width: 10, height: 10)
-                    Text("G: \(Int(kolor.color3G))").font(.caption)
-                    Circle().fill(Color.blue).frame(width: 10, height: 10)
-                    Text("B: \(Int(kolor.color3B))").font(.caption)
-                }
-            }
-            Spacer()
-        }.padding()
-        .background(RoundedRectangle(cornerRadius: 15, style: .continuous).fill(Color("Card")).frame(width:UIScreen.main.bounds.width-30))
-    }
-    var color4 : some View{
-        HStack{
-            Circle().fill(Color(red: kolor.color4R/255, green: kolor.color4G/255, blue: kolor.color4B/255)).frame(width: UIScreen.main.bounds.width/5,height:UIScreen.main.bounds.width/5).padding(.horizontal)
-            VStack(alignment:.leading,spacing: 6){
-                Text(kolor.color4Hex!).font(.title3).bold()
-                    .onTapGesture(count: 1) {
-                        UIPasteboard.general.setValue(kolor.color4Hex!,
-                                forPasteboardType: kUTTypePlainText as String)
-                        }
-                HStack{
-                    Circle().fill(Color.red).frame(width: 10, height: 10)
-                    Text("R: \(Int(kolor.color4R))").font(.caption)
-                    Circle().fill(Color.green).frame(width: 10, height: 10)
-                    Text("G: \(Int(kolor.color4G))").font(.caption)
-                    Circle().fill(Color.blue).frame(width: 10, height: 10)
-                    Text("B: \(Int(kolor.color4B))").font(.caption)
-                }
-            }
-            Spacer()
-        }.padding()
-        .background(RoundedRectangle(cornerRadius: 15, style: .continuous).fill(Color("Card")).frame(width:UIScreen.main.bounds.width-30))
-    }
-    var color5 : some View{
-        HStack{
-            Circle().fill(Color(red: kolor.color5R/255, green: kolor.color5G/255, blue: kolor.color5B/255)).frame(width: UIScreen.main.bounds.width/5,height:UIScreen.main.bounds.width/5).padding(.horizontal)
-            VStack(alignment:.leading,spacing: 6){
-                Text(kolor.color5Hex!).font(.title3).bold()
-                    .onTapGesture(count: 1) {
-                        UIPasteboard.general.setValue(kolor.color5Hex!,
-                                forPasteboardType: kUTTypePlainText as String)
-                        }
-                HStack{
-                    Circle().fill(Color.red).frame(width: 10, height: 10)
-                    Text("R: \(Int(kolor.color5R))").font(.caption)
-                    Circle().fill(Color.green).frame(width: 10, height: 10)
-                    Text("G: \(Int(kolor.color5G))").font(.caption)
-                    Circle().fill(Color.blue).frame(width: 10, height: 10)
-                    Text("B: \(Int(kolor.color5B))").font(.caption)
-                }
-            }
-            Spacer()
-        }.padding()
-        .background(RoundedRectangle(cornerRadius: 15, style: .continuous).fill(Color("Card")).frame(width:UIScreen.main.bounds.width-30))
-    }
-    
+    @Environment(\.dismiss) private var dismiss
+    @State private var snapshot: Snapshot?
+    @State private var showRename = false
+    @State private var showDeleteConfirmation = false
+    @State private var showDeleteError = false
+    @State private var shared: SharedPalette?
+
     var body: some View {
-        ZStack{
-            Color("AccentColor").ignoresSafeArea()
-            ScrollView(.vertical, showsIndicators: false){
-                VStack{
-                    Spacer(minLength: 15)
-                    Image(uiImage: UIImage(data: kolor.image!)!)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-                    .frame(width:UIScreen.main.bounds.width-30,height:UIScreen.main.bounds.height/3)
-                    
-                    color1
-                    color2
-                    color3
-                    color4
-                    color5
-                    Spacer(minLength: 15)
+        PaletteContent(image: snapshot?.image, colors: snapshot?.colors ?? [])
+            .bottomDock {
+                Button(action: share) {
+                    Label("Share Palette", systemImage: "square.and.arrow.up")
                 }
-            }.navigationBarTitleDisplayMode(.inline)
+                .buttonStyle(CapsuleButtonStyle(isPrimary: false))
+                .disabled(snapshot?.colors.isEmpty != false)
+            }
+            .navigationTitle(snapshot?.name ?? "")
+            .navigationBarTitleDisplayMode(.inline)
+            .tabBarHidden()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Menu {
+                        Button { showRename = true } label: { Label("Rename", systemImage: "pencil") }
+                        Button(role: .destructive) { showDeleteConfirmation = true } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    } label: {
+                        Label("More", systemImage: "ellipsis")
+                    }
+                }
+            }
+            .onAppear(perform: load)
+            .sheet(isPresented: $showRename) {
+                PaletteNameSheet(
+                    title: "Rename Palette", colors: snapshot?.colors ?? [],
+                    initialName: snapshot?.name ?? "", onSave: rename
+                )
+            }
+            .sheet(item: $shared) { ShareSheet(items: $0.items) }
+            .alert("Delete Palette?", isPresented: $showDeleteConfirmation) {
+                Button("Delete", role: .destructive, action: delete)
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This can't be undone.")
+            }
+            .alert("Couldn't Delete Palette", isPresented: $showDeleteError) {
+                Button("Close", role: .cancel) {}
+            } message: {
+                Text("Your library hasn't changed. Please try again.")
+            }
+    }
+
+    private func load() {
+        guard snapshot == nil, !kolor.isDeleted, kolor.managedObjectContext != nil else { return }
+        snapshot = Snapshot(
+            name: kolor.displayName, image: kolor.image.flatMap(UIImage.init(data:)), colors: kolor.paletteColors
+        )
+    }
+
+    private func share() {
+        guard let snapshot = snapshot else { return }
+        shared = SharedPalette(name: snapshot.name, image: snapshot.image, colors: snapshot.colors)
+    }
+
+    @MainActor
+    private func rename(to name: String) async throws {
+        kolor.paletteName = name
+        try viewContext.saveOrRollback()
+        snapshot?.name = name
+    }
+
+    private func delete() {
+        viewContext.delete(kolor)
+        do {
+            try viewContext.saveOrRollback()
+            dismiss()
+        } catch {
+            showDeleteError = true
         }
     }
 }
-
-//struct KolorView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        KolorView()
-//    }
-//}
