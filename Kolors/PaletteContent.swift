@@ -1,91 +1,106 @@
 import SwiftUI
 
-/// Photo, format switch and color bars, shared by new and saved palettes.
+/// The photo above full-width color bars, shared by new and saved palettes.
 struct PaletteContent: View {
+    /// Labels the next screen's back button.
+    let title: String
     let image: UIImage?
     /// `nil` while colors are being extracted.
     let colors: [RGBColor]?
-    var onReplace: ((PhotoSource) -> Void)?
+    /// Shown on the photo once the palette has one.
+    var name: String?
 
-    @AppStorage("colorFormat") private var format = ColorFormat.hex
+    @Environment(\.dynamicTypeSize) private var typeSize
+    @State private var topTone = PhotoTone.dark
+    @State private var bottomTone = PhotoTone.dark
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 14) {
-                if let image = image {
-                    photo(image)
+        GeometryReader { proxy in
+            let insets = proxy.safeAreaInsets
+            let height = proxy.size.height + insets.top + insets.bottom
+            let photoHeight = (height * (typeSize.isAccessibilitySize ? 0.34 : 0.48)).rounded()
+            let barsHeight = height - photoHeight
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
+                    photo(height: photoHeight)
+                    palette(height: barsHeight, bottomInset: insets.bottom)
                 }
-                palette
             }
-            .padding(16)
+            .bounceOnlyWhenScrollable()
+            .noTopScrollEdgeEffect()
+            .ignoresSafeArea()
+            .edgeToEdgeSides(proxy)
         }
         .background(Theme.background.ignoresSafeArea())
-    }
-
-    private func photo(_ image: UIImage) -> some View {
-        Color.clear
-            .frame(height: 200)
-            .overlay(Image(uiImage: image).resizable().aspectRatio(contentMode: .fill))
-            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadius, style: .continuous))
-            .accessibilityElement()
-            .accessibilityLabel("Source photo")
-            .accessibilityAddTraits(.isImage)
-            .overlay(replaceButton, alignment: .bottomTrailing)
-    }
-
-    @ViewBuilder private var replaceButton: some View {
-        if let onReplace = onReplace {
-            Group {
-                if PhotoSource.isCameraAvailable {
-                    Menu {
-                        Button { onReplace(.library) } label: { Label("Choose Photo", systemImage: "photo") }
-                        Button { onReplace(.camera) } label: { Label("Take Photo", systemImage: "camera") }
-                    } label: {
-                        replaceLabel
-                    }
-                } else {
-                    Button { onReplace(.library) } label: { replaceLabel }
-                }
-            }
-            .accessibilityLabel("Replace photo")
-            .padding(10)
+        .photoScreen(title: title, lightStatusBar: topTone == .dark)
+        .task(id: image.map(ObjectIdentifier.init)) {
+            guard let image = image else { return }
+            let tones = await Task.detached(priority: .userInitiated) {
+                (top: PhotoTone.of(image, top: true), bottom: PhotoTone.of(image, top: false))
+            }.value
+            topTone = tones.top
+            bottomTone = tones.bottom
         }
     }
 
-    private var replaceLabel: some View {
-        Text("Replace")
-            .font(.subheadline.weight(.semibold))
-            .foregroundColor(.white)
-            .padding(.horizontal, 16)
-            .frame(minHeight: 44)
-            .background(Capsule().fill(Color.black.opacity(0.72)))
+    private func photo(height: CGFloat) -> some View {
+        Color.black
+            .frame(height: height)
+            .overlay(image.map { Image(uiImage: $0).resizable().aspectRatio(contentMode: .fill) })
+            .clipped()
+            .overlay(topTone.scrim(fromTop: true).frame(height: 120), alignment: .top)
+            .overlay(nameLabel, alignment: .bottomLeading)
+            .overlay(Rectangle().fill(Color.gray.opacity(0.35)).frame(height: 1), alignment: .bottom)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(name.map { "\($0), source photo" } ?? "Source photo")
+            .accessibilityAddTraits(.isImage)
     }
 
-    @ViewBuilder private var palette: some View {
-        if let colors = colors {
-            if colors.isEmpty {
-                Text("No colors could be found in this photo.")
-                    .foregroundColor(Theme.secondaryText)
-                    .padding(.vertical, 40)
-            } else {
-                HStack {
-                    Text(colors.countLabel).font(.headline)
-                    Spacer()
-                    Picker("Color format", selection: $format) {
-                        ForEach(ColorFormat.allCases) { Text($0.rawValue).tag($0) }
-                    }
-                    .pickerStyle(.segmented)
-                    .fixedSize()
+    @ViewBuilder private var nameLabel: some View {
+        if let name = name {
+            PhotoNameLabel(name: name, tone: bottomTone)
+                .sidePadding(20)
+                .padding(.top, 50)
+                .padding(.bottom, 16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(bottomTone.scrim(fromTop: false))
+                .accessibilityAddTraits(.isHeader)
+        }
+    }
+
+    @ViewBuilder private func palette(height: CGFloat, bottomInset: CGFloat) -> some View {
+        if let colors = colors, !colors.isEmpty {
+            let barHeight = max(66, ((height - bottomInset) / CGFloat(colors.count)).rounded(.down))
+            VStack(spacing: 0) {
+                ForEach(Array(colors.enumerated()), id: \.offset) { index, color in
+                    ColorBar(
+                        color: color, minHeight: barHeight,
+                        bottomInset: index == colors.count - 1 ? bottomInset : 0
+                    )
                 }
-                ColorBars(colors: colors, format: format)
             }
         } else {
-            ProgressView("Finding colors")
-                .padding(.vertical, 40)
+            Group {
+                if colors == nil {
+                    ProgressView("Finding colors")
+                } else {
+                    Text("No colors could be found in this photo.")
+                        .foregroundColor(Theme.secondaryText)
+                        .multilineTextAlignment(.center)
+                }
+            }
+            .padding(24)
+            .frame(maxWidth: .infinity, minHeight: max(160, height))
         }
     }
 }
 
-extension Array where Element == RGBColor {
-    var countLabel: String { count == 1 ? "1 color" : "\(count) colors" }
+private extension View {
+    @ViewBuilder func bounceOnlyWhenScrollable() -> some View {
+        if #available(iOS 16.4, *) {
+            scrollBounceBehavior(.basedOnSize)
+        } else {
+            self
+        }
+    }
 }

@@ -2,19 +2,19 @@
 
 An iPhone app that extracts a color palette from a photo and saves it to a library.
 
-| Create | New palette | Save | Library | Dark mode |
-|---|---|---|---|---|
-| <img src="docs/screenshots/create.png" width="180" alt="Create screen with a sample picture and its palette"> | <img src="docs/screenshots/new-palette.png" width="180" alt="New palette with five color bars"> | <img src="docs/screenshots/save.png" width="180" alt="Sheet for naming a palette"> | <img src="docs/screenshots/library.png" width="180" alt="Library of saved palettes"> | <img src="docs/screenshots/library-dark.png" width="180" alt="Library in dark mode"> |
+| Home | New palette | Save | Library | Saved palette | Dark mode |
+|---|---|---|---|---|---|
+| <img src="docs/screenshots/home.png" width="150" alt="Home screen with a sunset drawing, its colors, a Library button and photo buttons"> | <img src="docs/screenshots/new-palette.png" width="150" alt="A photo of flowers above five full-width color bars"> | <img src="docs/screenshots/save.png" width="150" alt="Sheet for naming a palette"> | <img src="docs/screenshots/library.png" width="150" alt="Library of full-width photos, each above its colors"> | <img src="docs/screenshots/palette.png" width="150" alt="A saved palette with its name on the photo"> | <img src="docs/screenshots/home-dark.png" width="150" alt="Home screen in dark mode"> |
 
 - Take a photo or choose one from your library.
-- See up to five colors with hex and RGB values. Tap a color to copy it.
-- Name a palette and save it to your library, then rename, share or delete it.
+- See up to five colors with hex and RGB values. Tap either value to copy it.
+- Name a palette and save it to your library. Touch and hold a palette there to rename, share or delete it.
 
 Colors are listed from most to least common. Each one is the color of a real pixel in a scaled-down copy of the photo, chosen to be clearly different from the others, so small bright details can make the palette. White is skipped, and simple images can produce fewer than five colors.
 
 ## Build
 
-Requires iOS 15 or later. Open `Kolors.xcodeproj` and run the `Kolors` scheme. There are no third-party dependencies.
+Requires iOS 15 or later. Open `Kolors.xcodeproj` and run the `Kolors` scheme. There are no third-party dependencies. The app uses the [Geist](https://github.com/vercel/geist-font) font, bundled in `Kolors/Fonts` under the SIL Open Font License.
 
 ## Test
 

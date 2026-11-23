@@ -8,11 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    private enum Tab {
-        case create, library
-    }
-
-    @State private var tab = Tab.create
     @State private var showLoadError: Bool
 
     init(libraryFailedToLoad: Bool = false) {
@@ -20,14 +15,8 @@ struct ContentView: View {
     }
 
     var body: some View {
-        TabView(selection: $tab) {
-            ImageView()
-                .tabItem { Label("Create", systemImage: "plus.circle") }
-                .tag(Tab.create)
-            KolorsView { tab = .create }
-                .tabItem { Label("Library", systemImage: "paintpalette") }
-                .tag(Tab.library)
-        }
+        NavigationContainer { HomeView() }
+            .font(.geistBody)
         .alert("Library Unavailable", isPresented: $showLoadError) {
             Button("Close", role: .cancel) {}
         } message: {

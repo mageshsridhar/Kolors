@@ -12,6 +12,10 @@ import CoreData
 struct KolorsApp: App {
     private let persistence = PersistenceController.shared
 
+    init() {
+        NavigationBarStyle.apply()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView(libraryFailedToLoad: persistence.loadError != nil)

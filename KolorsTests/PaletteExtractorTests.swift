@@ -191,6 +191,13 @@ final class PaletteExtractorTests: XCTestCase {
         XCTAssertEqual(PaletteShareImage.render(photo: nil, colors: SampleArtwork.palette).size, CGSize(width: 1080, height: 800))
     }
 
+    /// Without them, text silently falls back to the system font.
+    func testGeistFontsAreBundled() {
+        for weight in [Geist.regular, .medium, .semibold] {
+            XCTAssertNotNil(UIFont(name: weight.rawValue, size: 17), weight.rawValue)
+        }
+    }
+
     func testFormats() {
         let color = RGBColor(red: 1, green: 20, blue: 255)
         XCTAssertEqual(ColorFormat.hex.text(for: color), "#0114FF")

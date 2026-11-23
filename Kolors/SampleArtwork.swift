@@ -1,53 +1,66 @@
 import SwiftUI
 
-/// A drawn sunset above its own palette, to show what the app does.
+/// A drawn sunset, made of exactly the colors in `palette`, to show what the app does.
 struct SampleArtwork: View {
-    static let palette = [
-        RGBColor(red: 255, green: 179, blue: 138),
-        RGBColor(red: 255, green: 233, blue: 168),
-        RGBColor(red: 226, green: 98, blue: 108),
-        RGBColor(red: 126, green: 64, blue: 124),
-        RGBColor(red: 45, green: 42, blue: 92)
-    ]
+    private static let sky = RGBColor(red: 246, green: 166, blue: 139)
+    private static let sun = RGBColor(red: 255, green: 226, blue: 160)
+    private static let near = RGBColor(red: 217, green: 93, blue: 119)
+    private static let middle = RGBColor(red: 124, green: 63, blue: 126)
+    private static let far = RGBColor(red: 46, green: 42, blue: 94)
+
+    /// In the order the app finds them, most common first.
+    static let palette = [sky, far, near, middle, sun]
+
+    /// The drawing is a 400-point square. It fills the space and is cropped, keeping this
+    /// fraction of its height in view.
+    private static let size: CGFloat = 400
+    private static let verticalAnchor: CGFloat = 0.62
 
     var body: some View {
-        VStack(spacing: 4) {
-            GeometryReader { proxy in
-                ZStack {
-                    Self.palette[0].color
-                    Circle()
-                        .fill(Self.palette[1].color)
-                        .frame(width: proxy.size.height * 0.5)
-                        .position(x: proxy.size.width * 0.66, y: proxy.size.height * 0.44)
-                    Hill(left: 0.62, right: 0.50, lift: 0.22).fill(Self.palette[2].color)
-                    Hill(left: 0.66, right: 0.74, lift: 0.14).fill(Self.palette[3].color)
-                    Hill(left: 0.90, right: 0.80, lift: 0.10).fill(Self.palette[4].color)
-                }
+        GeometryReader { proxy in
+            let scale = max(proxy.size.width, proxy.size.height) / Self.size
+            let side = Self.size * scale
+            ZStack(alignment: .topLeading) {
+                Self.sky.color
+                Circle()
+                    .fill(Self.sun.color)
+                    .frame(width: 116 * scale, height: 116 * scale)
+                    .offset(x: 82 * scale, y: 92 * scale)
+                Hill(points: [(0, 215), (110, 215), (180, 170), (280, 178), (380, 200), (400, 205)])
+                    .fill(Self.near.color)
+                Hill(points: [(0, 262), (90, 215), (170, 250), (240, 280), (360, 285), (400, 255)])
+                    .fill(Self.middle.color)
+                Hill(points: [(0, 318), (70, 330), (120, 352), (190, 335), (320, 290), (400, 330)])
+                    .fill(Self.far.color)
             }
-            .frame(height: 220)
-            .clipped()
-            PaletteStrip(colors: Self.palette).frame(height: 56)
+            .frame(width: side, height: side)
+            .offset(
+                x: (proxy.size.width - side) / 2,
+                y: (proxy.size.height - side) * Self.verticalAnchor
+            )
         }
-        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .clipped()
         .accessibilityElement()
-        .accessibilityLabel("Example: a sunset picture above the five colors found in it")
+        .accessibilityLabel("Example: a sunset drawing above the five colors found in it")
         .accessibilityAddTraits(.isImage)
     }
 }
 
+/// A hill's top edge on the 400-point square, as two smoothly joined curves, filled to the bottom.
 private struct Hill: Shape {
-    let left: CGFloat
-    let right: CGFloat
-    let lift: CGFloat
+    /// Start, two control points, middle, the second curve's last control point, end.
+    /// The second curve's first control point mirrors the first curve's last, so the join is smooth.
+    let points: [(CGFloat, CGFloat)]
 
     func path(in rect: CGRect) -> Path {
+        let scale = rect.width / 400
+        let point = { (index: Int) in CGPoint(x: points[index].0 * scale, y: points[index].1 * scale) }
+        let middle = point(3)
+        let mirrored = CGPoint(x: 2 * middle.x - point(2).x, y: 2 * middle.y - point(2).y)
         var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.height * left))
-        path.addCurve(
-            to: CGPoint(x: rect.maxX, y: rect.height * right),
-            control1: CGPoint(x: rect.width * 0.35, y: rect.height * (left - lift)),
-            control2: CGPoint(x: rect.width * 0.65, y: rect.height * (right + lift))
-        )
+        path.move(to: point(0))
+        path.addCurve(to: middle, control1: point(1), control2: point(2))
+        path.addCurve(to: point(5), control1: mirrored, control2: point(4))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.closeSubpath()

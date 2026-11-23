@@ -24,6 +24,19 @@ enum ImageProcessing {
         }
     }
 
+    /// Decodes image data at no more than `maxPixels` on its longest side, without decoding it in full.
+    static func downsampled(_ data: Data, maxPixels: CGFloat) -> UIImage? {
+        let options = [kCGImageSourceShouldCache: false] as CFDictionary
+        guard let source = CGImageSourceCreateWithData(data as CFData, options) else { return nil }
+        let thumbnailOptions = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixels
+        ] as CFDictionary
+        return CGImageSourceCreateThumbnailAtIndex(source, 0, thumbnailOptions).map { UIImage(cgImage: $0) }
+    }
+
     static func storedImageData(from image: UIImage) -> Data? {
         resized(image, maxPixels: storedMaxPixels)?.jpegData(compressionQuality: 0.8)
     }

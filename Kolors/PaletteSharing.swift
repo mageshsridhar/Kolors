@@ -86,7 +86,7 @@ enum PaletteShareImage {
                 ).setFill()
                 context.fill(bar)
                 let text = NSAttributedString(string: color.hex, attributes: [
-                    .font: UIFont.systemFont(ofSize: 48, weight: .semibold),
+                    .font: UIFont.geist(.semibold, size: 48),
                     .foregroundColor: color.prefersWhiteText ? UIColor.white : UIColor.black
                 ])
                 text.draw(at: CGPoint(x: 56, y: bar.midY - text.size().height / 2))

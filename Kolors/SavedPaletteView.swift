@@ -1,5 +1,5 @@
 //
-//  KolorView.swift
+//  SavedPaletteView.swift
 //  Kolors
 //
 //  Created by Magesh Sridhar on 3/30/21.
@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 /// A saved palette.
-struct KolorView: View {
+struct SavedPaletteView: View {
     /// What's on screen, kept so that nothing disappears while a deleted palette's screen closes.
     private struct Snapshot {
         var name: String
@@ -18,6 +18,8 @@ struct KolorView: View {
     }
 
     let kolor: Kolors
+    /// The library's namespace, for zooming in from its row.
+    var zoom: Namespace.ID?
 
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
@@ -28,29 +30,27 @@ struct KolorView: View {
     @State private var shared: SharedPalette?
 
     var body: some View {
-        PaletteContent(image: snapshot?.image, colors: snapshot?.colors ?? [])
-            .bottomDock {
-                Button(action: share) {
-                    Label("Share Palette", systemImage: "square.and.arrow.up")
-                }
-                .buttonStyle(CapsuleButtonStyle(isPrimary: false))
-                .disabled(snapshot?.colors.isEmpty != false)
-            }
-            .navigationTitle(snapshot?.name ?? "")
-            .navigationBarTitleDisplayMode(.inline)
-            .tabBarHidden()
+        PaletteContent(
+            title: snapshot?.name ?? "", image: snapshot?.image, colors: snapshot?.colors ?? [], name: snapshot?.name
+        )
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: share) {
+                        BarIcon(title: "Share palette", systemImage: "square.and.arrow.up")
+                    }
+                    .disabled(snapshot?.colors.isEmpty != false)
                     Menu {
                         Button { showRename = true } label: { Label("Rename", systemImage: "pencil") }
                         Button(role: .destructive) { showDeleteConfirmation = true } label: {
                             Label("Delete", systemImage: "trash")
                         }
                     } label: {
-                        Label("More", systemImage: "ellipsis")
+                        BarIcon(title: "More", systemImage: "ellipsis")
                     }
                 }
             }
+            .zoomDestination(id: kolor.objectID, in: zoom)
+            // Not in init: the library creates this view for every row it shows.
             .onAppear(perform: load)
             .sheet(isPresented: $showRename) {
                 PaletteNameSheet(

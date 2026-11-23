@@ -21,7 +21,10 @@ struct PaletteNameSheet: View {
         ScrollView {
             VStack(spacing: 14) {
                 HStack {
-                    Text(title).font(.headline).accessibilityAddTraits(.isHeader)
+                    Text(title)
+                        .font(.geist(.semibold, size: 24, relativeTo: .title2))
+                        .tracking(-0.7)
+                        .accessibilityAddTraits(.isHeader)
                     Spacer()
                     Button { dismiss() } label: {
                         Image(systemName: "xmark")
@@ -36,6 +39,7 @@ struct PaletteNameSheet: View {
                     .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 HStack {
                     TextField("Palette name", text: $name)
+                        .font(.geist(.medium, size: 19, relativeTo: .body))
                         .focused($isFocused)
                         .submitLabel(.done)
                         .onSubmit(save)
@@ -49,8 +53,8 @@ struct PaletteNameSheet: View {
                     }
                 }
                 .padding(.leading, 16)
-                .frame(minHeight: 52)
-                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Theme.card))
+                .frame(minHeight: 58)
+                .background(RoundedRectangle(cornerRadius: 18, style: .continuous).fill(Theme.fill))
                 Button("Save", action: save)
                     .buttonStyle(CapsuleButtonStyle())
                     .disabled(!canSave)
@@ -92,7 +96,7 @@ struct PaletteNameSheet: View {
 private extension View {
     @ViewBuilder func compactSheet(isCompact: Bool) -> some View {
         if #available(iOS 16, *) {
-            presentationDetents([isCompact ? .height(280) : .large])
+            presentationDetents([isCompact ? .height(300) : .large])
         } else {
             self
         }
