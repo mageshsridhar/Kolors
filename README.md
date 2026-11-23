@@ -10,7 +10,7 @@ An iPhone app that extracts a color palette from a photo and saves it to a libra
 - See up to five colors with hex and RGB values. Tap a color to copy it.
 - Name a palette and save it to your library, then rename, share or delete it.
 
-Each color is the average of a group of similar pixels, so it may not match any single pixel exactly. Simple images can produce fewer than five colors.
+Colors are listed from most to least common. Each one is the color of a real pixel in a scaled-down copy of the photo, chosen to be clearly different from the others, so small bright details can make the palette. White is skipped, and simple images can produce fewer than five colors.
 
 ## Build
 
