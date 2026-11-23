@@ -14,14 +14,14 @@ Colors are listed from most to least common. Each one is the color of a real pix
 
 ## Build
 
-Requires iOS 15 or later. Open `Kolors.xcworkspace` (not the `.xcodeproj`) and run the `Kolors` scheme. `Pods/` is committed, so CocoaPods is only needed to change dependencies.
+Requires iOS 15 or later. Open `Kolors.xcodeproj` and run the `Kolors` scheme. There are no third-party dependencies.
 
 ## Test
 
 Run the `Kolors` scheme's tests in Xcode, or:
 
 ```sh
-xcodebuild test -workspace Kolors.xcworkspace -scheme Kolors \
+xcodebuild test -project Kolors.xcodeproj -scheme Kolors \
   -destination 'platform=iOS Simulator,name=<simulator name>'
 ```
 
