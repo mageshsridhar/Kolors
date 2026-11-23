@@ -96,7 +96,11 @@ struct HomeView: View {
     private var libraryButton: some View {
         Button { showLibrary = true } label: {
             HStack(spacing: 12) {
-                Text("Library").font(.geist(.medium, size: 17, relativeTo: .body))
+                Text("Library")
+                    .font(.geist(.medium, size: 17, relativeTo: .body))
+                    // Keeps the strips from squeezing it onto two lines, as can happen mid-animation.
+                    .lineLimit(1)
+                    .fixedSize()
                 Spacer(minLength: 0)
                 if !typeSize.isAccessibilitySize {
                     ForEach(newest) { kolor in
